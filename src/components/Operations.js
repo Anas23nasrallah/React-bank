@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/operations.css'
 
 class Operations extends Component {
 
@@ -61,12 +62,14 @@ class Operations extends Component {
     render() {
         return (
             <div>
-
-                <input placeholder='Amount' id='amount-input' onChange={this.handleAmountInput} value={this.state.amount} />
-                <input placeholder='Vendor' id='vendor-input' onChange={this.handleVendorInput} value={this.state.vendor} />
-                <input placeholder='Category' id='category-input' onChange={this.handleCategoryInput} value={this.state.category} />
-                <button onClick={this.deposit}>Deposit</button>
-                <button onClick={this.withdraw}>Withdraw</button>
+                
+                <br></br>
+                <br></br>
+                <input placeholder='Amount' type='Number' className='operation-input' id='amount-input' onChange={this.handleAmountInput} value={this.state.amount} />
+                <input placeholder='Vendor' className='operation-input' id='vendor-input' onChange={this.handleVendorInput} value={this.state.vendor} />
+                <input placeholder='Category' className='operation-input' id='category-input' onChange={this.handleCategoryInput} value={this.state.category} />
+                <button onClick={this.deposit} className='btn' id='deposit-btn'>Deposit</button>
+                <button onClick={this.withdraw} className='btn' id='withdraw-btn'>Withdraw</button>
                 
             </div>
         )

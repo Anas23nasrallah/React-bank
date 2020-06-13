@@ -1,0 +1,50 @@
+.transaction{
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    width: 85%;
+    height: 40px;
+    padding: 4%;
+    margin-left: 2%;
+    margin-top: 3%;
+    border-radius: 40px 10px;
+    text-align: center;
+    border-style: solid;
+    border-color: white;
+}
+
+.withdraw{
+    background-color: red;
+}
+
+.deposit{
+    background-color:green;
+}
+
+.values{
+    float: left;
+    font-size: 120%;
+    padding-left: 3%;
+    margin-top: 9px;
+    color: lavender;
+
+}
+.vendor{
+    grid-column: 1 / span 3;
+}
+
+.amount{
+    grid-column: 4 / span 3;
+}
+
+.category{
+    grid-column: 7 / span 3;
+}
+
+.delete-transaction{
+    grid-column: 10 / span 1;
+    height: 50%;
+    width:20px;
+    margin-top: 40%;
+    margin-left: 20%;
+    border-radius: 50%;
+}

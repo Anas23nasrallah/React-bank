@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/transaction.css'
 
 class Transaction extends Component {
 
@@ -8,12 +9,13 @@ class Transaction extends Component {
 
     render() {
         const transaction = this.props.transaction
+        const amount = transaction.amount
         return (
-            <div>
-                <span>{transaction.vendor} </span>
-                <span>{transaction.amount} </span>
-                <span>{transaction.category} </span>
-                <button id='delete' onClick={this.deleteTransaction}>-</button>
+            <div className={amount > 0 ? 'transaction deposit' : 'transaction withdraw'}>
+                <div className='vendor values'>{transaction.vendor} </div>
+                <div className='amount values'>{transaction.amount} </div>
+                <div className='category values'>{transaction.category} </div>
+                <button className='delete-transaction' onClick={this.deleteTransaction}>-</button>
             </div>
         )
     }

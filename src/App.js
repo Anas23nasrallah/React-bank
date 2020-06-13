@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Link, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import Transactions from './components/Transactions'
 import Operations from './components/Operations';
 import Breakdown from './components/Breakdown';
+import Landing from './components/Landing'
 const axios = require('axios');
 
 class App extends Component {
@@ -22,10 +23,14 @@ class App extends Component {
   }
 
   addTransaction = async (operationDetails) => {
+    if(!operationDetails.amount || !operationDetails.vendor || !operationDetails.category){
+      alert('Fill all the required inputs')
+      return
+    }
     const respond = await axios.post('http://localhost:3001/transaction', operationDetails)
     const transactions = [...this.state.transactions]
     operationDetails._id = respond.data
-    transactions.push(operationDetails)
+    transactions.unshift(operationDetails)
     this.setState({ transactions })
   }
 
@@ -33,8 +38,8 @@ class App extends Component {
     const transactionToDeleteId = this.state.transactions.find(t => t._id === id)._id
     await axios.delete('http://localhost:3001/transaction/' + transactionToDeleteId)
     const transactions = [...this.state.transactions]
-    for(let i = 0; i < transactions.length; i++){
-      if(transactions[i]._id === transactionToDeleteId){
+    for (let i = 0; i < transactions.length; i++) {
+      if (transactions[i]._id === transactionToDeleteId) {
         transactions.splice(i, 1)
         break
       }
@@ -47,22 +52,27 @@ class App extends Component {
   render() {
 
     let balance = 0;
-    if(this.state.transactions.length){
+    if (this.state.transactions.length) {
       balance = this.state.transactions.map(t => t.amount).reduce((sum, currentValue) => sum + currentValue)
     }
+    
     return (
       <Router >
         <div>
 
-          <Link to='/transactions'><span>Transactions  </span></Link>
-          <Link to='/operations'><span>  Operations</span></Link>
-          <Link to='/breakdown'><span>  Breakdown</span></Link>
+          <div id='header'>
+            <Link to='/transactions' className='header-link' id='transactions-link'><span> Transactions</span></Link>
+            <Link to='/operations' className='header-link' id='operations-link'><span>  Operations</span></Link>
+            <Link to='/breakdown' className='header-link' id='breakdown-link'><span>  Breakdown</span></Link>
+          </div>
 
-          <div>Balance: {balance}</div> 
+          <hr></hr>
 
-          <Route exact path='/breakdown' render={() =>  <Breakdown transactions={this.state.transactions}/>} />
-          <Route exact path='/transactions' render={() => <Transactions transactions={this.state.transactions} deleteTransaction={this.deleteTransaction}/> } />
-          <Route exact path='/operations' render={() =>  <Operations addTransaction={this.addTransaction}/>} />
+          <div id='balance' class={balance > 0 ? 'positive' : 'negative'}>Balance: {balance} &#8362;</div> <br></br>
+          <Route exact path='/' render={() => <Landing/>} />
+          <Route exact path='/breakdown' render={() => <Breakdown transactions={this.state.transactions} />} />
+          <Route exact path='/transactions' render={() => <Transactions transactions={this.state.transactions} deleteTransaction={this.deleteTransaction} />} />
+          <Route exact path='/operations' render={() => <Operations addTransaction={this.addTransaction} />} />
 
         </div>
 

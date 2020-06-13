@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/breakDown.css'
 
 class Breakdown extends Component {
 
@@ -26,11 +27,12 @@ class Breakdown extends Component {
         const summedByCategory = this.sumByCategory(transactions)
         return (
             <div>
-                <div>BreakDown: </div>
+                <div id='breakdown-title'>BreakDown: </div>
                 {summedByCategory.map((c, i) => {
                     return (
-                        <div key={i}>
-                            <span>{c.category} : {c.sum}</span>
+                        <div key={i} className='breakdown-element'>
+                            <div className='breakdown-category'>{c.category}</div> 
+                            <div className='breakdown-amount'>{c.sum}</div>
                         </div>
                     )
                 })}
